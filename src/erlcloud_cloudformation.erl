@@ -10,7 +10,9 @@
 		  desribe_stacks/2,
 		  get_stack_policy/2,
 		  get_template/2,
-		  get_template_summary/3]).
+		  get_template_summary/3,
+		  describe_account_limits/1,
+		  describe_stack_events/2]).
 
 list_stacks(Config = #aws_config{}) ->
 	cloudformation_request(Config, "ListStacks", []).
@@ -32,6 +34,9 @@ desribe_stacks(StackId, Config = #aws_config{}) ->
 get_stack_policy(StackId, Config = #aws_config{}) ->
 	cloudformation_request(Config, "GetStackPolicy", [{"StackName", StackId}]).
 
+describe_stack_events(StackId, Config = #aws_config{}) ->
+	cloudformation_request(Config, "DescribeStackEvents", [{"StackName", StackId}]).
+
 get_template(StackId, Config = #aws_config{}) ->
 	cloudformation_request(Config, "GetTemplate", [{"StackName", StackId}]).
 
@@ -39,6 +44,9 @@ get_template_summary(StackId, TemplateUrl, Config = #aws_config{}) ->
 	cloudformation_request(Config, "GetTemplateSummary", [{"StackName", StackId}, 
 														  {"TemplateURL", TemplateUrl}
 														 ]).
+
+describe_account_limits(Config = #aws_config{}) ->
+	cloudformation_request(Config, "DescribeAccountLimits", []).
 
 cloudformation_request(Config = #aws_config{}, Action, ExtraParams) ->
 
